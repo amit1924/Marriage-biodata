@@ -74,11 +74,16 @@ if options == "Home":
         unsafe_allow_html=True,
     )
     st.write(f"**Weight:** <span class='answer'>66 kg</span>", unsafe_allow_html=True)
+
     st.write(
-        f"**Address:** <span class='answer'>Patna West Patel Nagar, Village - Dakhram (Darbhanga)</span>",
+        f"**Current Address:** <span class='answer'> West Patel Nagar Patna</span>",
         unsafe_allow_html=True,
     )
 
+    st.write(
+        f"**Village:** <span class='answer'> Dakhram (Darbhanga)</span>",
+        unsafe_allow_html=True,
+    )
     # Education and Profession
     st.header("Education and Profession")
     st.write(
@@ -127,6 +132,10 @@ if options == "Home":
     )
     st.write("**Gotra:** <span class='answer'>Shandilya</span>", unsafe_allow_html=True)
 
+    st.header("Contact Information")
+    st.write(
+        "**Contact:** <span class='answer'>9431629191</span>", unsafe_allow_html=True
+    )
     # Partner Preferences
     st.header("Partner Preferences")
     preferred_age = st.slider("Preferred Age Range", 18, 40, (25, 30))
@@ -137,10 +146,6 @@ if options == "Home":
     # State variable to control summary visibility
     if "show_summary" not in st.session_state:
         st.session_state.show_summary = False
-
-    # Submit Button
-    if st.button("Generate Biodata"):
-        st.session_state.show_summary = True
 
     if st.session_state.show_summary:
         st.subheader("Biodata Summary")
