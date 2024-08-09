@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+from streamlit_chat import message as st_message  # Import streamlit_chat
 
 # Set page config to change the title
 st.set_page_config(page_title="Marriage Biodata", page_icon=":ring:")
@@ -11,6 +12,7 @@ st.markdown(
     h1 {
         font-size: 3em; 
         color: #2E86C1; /* Title color */
+        text-align: center; /* Center the title */
     }
     h2 {
         font-size: 2.5em; 
@@ -28,6 +30,12 @@ st.markdown(
         color: #28B463; /* Answers color */
         font-weight: bold;
     }
+    .ganesh-text {
+        font-size: 0.5em; 
+        color: #FF5733; /* Custom color for Ganesh text */
+        text-align: center; 
+        margin: 20px 0;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -35,15 +43,20 @@ st.markdown(
 
 # Load your profile image
 image = Image.open("profile.jpg")
+# Load the Ganesh image and resize it
+ganesh_image = Image.open("Ganeshaa.png")
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
 options = st.sidebar.radio("Go to", ("Home", "Pictures"))
 
-# App title
-st.title("Marriage Biodata - Amit Kumar")
-
 if options == "Home":
+    # Display the Ganesh image at the top center
+    st.image(ganesh_image, width=100, caption="Lord Ganesh", use_column_width=True)
+
+    # App title
+    st.title("Marriage Biodata - Amit Kumar")
+
     # Display the profile image
     st.image(image, caption="Amit Kumar", use_column_width=True)
 
@@ -205,48 +218,43 @@ if options == "Home":
         if st.button("Hide Summary"):
             st.session_state.show_summary = False
 
-    # Contact Form
-    st.header("Contact Me")
-    with st.form("contact_form"):
-        st.write("For inquiries, you can reach out at: **9431629191**")
-        name = st.text_input("Your Name")
-        email = st.text_input("Your Email")
-        message = st.text_area("Your Message")
-        submit_button = st.form_submit_button("Send")
+    # Maps Section
+    st.header("Location Map")
+    st.write("Here is the location where I reside:")
 
-    if submit_button:
-        st.success("Your message has been sent! Thank you for contacting me.")
+    # Coordinates for the map (you can change this to your preferred location)
+    lat = 25.6162399  # Example latitude
+    lon = 85.0943745  # Example longitude
+    st.map(data={"lat": [lat], "lon": [lon]})
 
-elif options == "Pictures":
-    st.header("Additional Pictures")
+# Chatbot Section
+st.header("Chatbot")
 
-    # Load images for slideshow
-    images = [
-        Image.open("p-1.jpeg"),
-        Image.open("p-2.jpg"),
-        Image.open("p-8.jpg"),
-    ]
+# Create session state for chat history
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
-    # State variable for current image index
-    if "current_image_index" not in st.session_state:
-        st.session_state.current_image_index = 0
+# Input field for user message
+user_input = st.text_input("You:", key="user_input")
 
-    # Display the current image
-    st.image(
-        images[st.session_state.current_image_index],
-        caption=f"Picture {st.session_state.current_image_index + 1}",
-        use_column_width=True,
-    )
+if st.button("Send"):
+    if user_input:
+        # Append user message to chat history
+        st.session_state.chat_history.append({"message": user_input, "is_user": True})
 
-    # Navigation buttons
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("Previous"):
-            if st.session_state.current_image_index > 0:
-                st.session_state.current_image_index -= 1
-    with col2:
-        if st.button("Next"):
-            if st.session_state.current_image_index < len(images) - 1:
-                st.session_state.current_image_index += 1
+        # Here you would add your chatbot logic (for now, it just echoes back the message)
+        response = f"You said: {user_input}"
+        st.session_state.chat_history.append({"message": response, "is_user": False})
 
-# Run the app with `streamlit run marriage_biodata.py`
+# Display chat messages
+for chat in st.session_state.chat_history:
+    if chat["is_user"]:
+        st_message(chat["message"], is_user=True)
+    else:
+        st_message(chat["message"], is_user=False)
+
+# Footer
+st.markdown(
+    "<p class='ganesh-text'>May Lord Ganesh bless this biodata.</p>",
+    unsafe_allow_html=True,
+)
