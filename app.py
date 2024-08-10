@@ -74,7 +74,7 @@ if options == "Home":
         unsafe_allow_html=True,
     )
     st.write(
-        f"**Height:** <span class='answer'>5 foot 7 inches</span>",
+        f"**Height:** <span class='answer'>5 feet 8 inches</span>",
         unsafe_allow_html=True,
     )
     st.write(f"**Weight:** <span class='answer'>66 kg</span>", unsafe_allow_html=True)
@@ -125,14 +125,14 @@ if options == "Home":
         unsafe_allow_html=True,
     )
     st.write(
-        "**Grandfather:** <span class='answer'>Kailash Chandra Jha, Retired from All India Radio</span>",
+        "**Grandfather:** <span class='answer'>Kailash  Jha, Retired from All India Radio</span>",
         unsafe_allow_html=True,
     )
 
     # Community Information
     st.header("Community Information")
     st.write(
-        "**Caste:** <span class='answer'>Hindu Brahmin</span>", unsafe_allow_html=True
+        "**Caste:** <span class='answer'>Maithil Brahmin</span>", unsafe_allow_html=True
     )
     st.write("**Gotra:** <span class='answer'>Shandilya</span>", unsafe_allow_html=True)
 
