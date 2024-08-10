@@ -223,9 +223,6 @@ if options == "Home":
             unsafe_allow_html=True,
         )
 
-    if st.button("Show Biodata Summary"):
-        st.session_state.show_summary = True
-
     # Maps Section
     st.header("Location Map")
     st.write("Here is the location where I reside:")
