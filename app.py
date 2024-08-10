@@ -41,10 +41,14 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Load your profile image
+# Load your images
 image = Image.open("profile.jpg")
-# Load the Ganesh image and resize it
 ganesh_image = Image.open("Ganeshaa.png")
+photos = [
+    Image.open("p-8.jpg"),  # Replace with your photo file paths
+    Image.open("p-2.jpg"),
+    Image.open("p-9.jpg"),
+]
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
@@ -192,7 +196,7 @@ if options == "Home":
             unsafe_allow_html=True,
         )
         st.write(
-            "**Grandfather:** <span class='answer'>Kailash Chandra Jha, Retired from All India Radio</span>",
+            "**Grandfather:** <span class='answer'>Kailash  Jha, Retired from All India Radio</span>",
             unsafe_allow_html=True,
         )
         st.write(
@@ -219,47 +223,23 @@ if options == "Home":
             unsafe_allow_html=True,
         )
 
-        # Button to hide summary
-        if st.button("Hide Summary"):
-            st.session_state.show_summary = False
+    if st.button("Show Biodata Summary"):
+        st.session_state.show_summary = True
 
     # Maps Section
     st.header("Location Map")
     st.write("Here is the location where I reside:")
 
-    # Coordinates for the map (you can change this to your preferred location)
-    lat = 25.6162399  # Example latitude
-    lon = 85.0943745  # Example longitude
-    st.map(data={"lat": [lat], "lon": [lon]})
+    # Embed Google Map
+    google_maps_url = (
+        "https://www.google.com/maps/embed?pb=!"  # Replace with your own embed URL
+    )
+    st.markdown(
+        f'<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d648472.8122326031!2d85.02088603073184!3d26.12045422176567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1723266602593!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+        unsafe_allow_html=True,
+    )
 
-# Chatbot Section
-st.header("Chatbot")
-
-# Create session state for chat history
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
-
-# Input field for user message
-user_input = st.text_input("You:", key="user_input")
-
-if st.button("Send"):
-    if user_input:
-        # Append user message to chat history
-        st.session_state.chat_history.append({"message": user_input, "is_user": True})
-
-        # Here you would add your chatbot logic (for now, it just echoes back the message)
-        response = f"You said: {user_input}"
-        st.session_state.chat_history.append({"message": response, "is_user": False})
-
-# Display chat messages
-for chat in st.session_state.chat_history:
-    if chat["is_user"]:
-        st_message(chat["message"], is_user=True)
-    else:
-        st_message(chat["message"], is_user=False)
-
-# Footer
-st.markdown(
-    "<p class='ganesh-text'>May Lord Ganesh bless this biodata.</p>",
-    unsafe_allow_html=True,
-)
+elif options == "Pictures":
+    st.title("My Photos")
+    for photo in photos:
+        st.image(photo, width=700)
