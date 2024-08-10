@@ -47,7 +47,7 @@ ganesh_image = Image.open("Ganeshaa.png")
 photos = [
     Image.open("p-8.jpg"),  # Replace with your photo file paths
     Image.open("p-2.jpg"),
-    Image.open("p-9.jpg"),
+    Image.open("p-1.jpeg"),
 ]
 
 # Sidebar for navigation
@@ -238,8 +238,27 @@ if options == "Home":
         f'<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d648472.8122326031!2d85.02088603073184!3d26.12045422176567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1723266602593!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
         unsafe_allow_html=True,
     )
-
+# Pictures Section with Slider
 elif options == "Pictures":
     st.title("My Photos")
-    for photo in photos:
-        st.image(photo, width=700)
+
+    # Initialize the photo index in session state if not already present
+    if "photo_index" not in st.session_state:
+        st.session_state.photo_index = 0
+
+    # Display the current photo
+    current_photo = photos[st.session_state.photo_index]
+    st.image(current_photo, width=500)
+
+    # Buttons for navigation
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col1:
+        if st.button("Previous"):
+            st.session_state.photo_index = (st.session_state.photo_index - 1) % len(
+                photos
+            )
+    with col3:
+        if st.button("Next"):
+            st.session_state.photo_index = (st.session_state.photo_index + 1) % len(
+                photos
+            )
